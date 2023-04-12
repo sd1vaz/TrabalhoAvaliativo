@@ -12,11 +12,13 @@
     @switch (operacao)
     {
         case 1:
-        <h1>Seu Saldo Atual é de R$ @carteira.Saldo .</h1>
+            <h1>Seu Saldo Atual é de R$ @carteira.Saldo .</h1>
             break;
         case 2:
+
             break;
         case 3:
+            <Deposito Conta="carteira"></Deposito>
             break;
         case 4:
             break;
@@ -31,7 +33,7 @@ else
     [Parameter]
     public string? conta { get; set; }
     private int operacao = 0;
-    private Carteira? carteira=null;
+    private Carteira? carteira = null;
 
     protected override void OnInitialized()
     {
