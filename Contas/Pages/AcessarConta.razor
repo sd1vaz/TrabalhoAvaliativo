@@ -1,5 +1,6 @@
 ﻿@page "/acesso/{conta}"
 @inject DadosCarteiras dados;
+
 @if (carteira is not null)
 {
     <h1>Conta: @carteira.Dono</h1>
@@ -35,6 +36,8 @@ else
     private int operacao = 0;
     private Carteira? carteira = null;
 
+
+    //Ao Incializar a Pagina(Tela- Interface Grafica)
     protected override void OnInitialized()
     {
         carteira = this.dados.ListaDados.FirstOrDefault(c => c.Dono == conta);
