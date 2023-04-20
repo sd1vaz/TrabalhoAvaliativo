@@ -43,9 +43,10 @@
     {
         Carteira destino =  dados.ListaDados.FirstOrDefault(c => c.Dono == contaDestino);
         if (destino is not null)
-        {
+    {
             Conta.Transferir(destino, ValorTransferencia);
             transferenciaOk = true;
+            
         }
         else
         {

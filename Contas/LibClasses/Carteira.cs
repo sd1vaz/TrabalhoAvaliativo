@@ -14,6 +14,14 @@ namespace Contas.LibClasses
             private set;
         }
         public string Dono { get; set; }
+        public int ID { get; set; }
+        private static int _IDAtual = 0;
+
+        public Carteira()
+        {
+            _IDAtual++;
+            this.ID = _IDAtual; 
+        }
 
         public bool Sacar(double Valor)
         {
@@ -35,7 +43,7 @@ namespace Contas.LibClasses
             (Carteira destino, double valor)
         {  
             //se nao tiver saldo cancela transferencia retornando false
-            if (this.Saldo <= valor)
+            if (this.Saldo < valor)
                 return false;
 
             //Executa transferencia tirando da conta origram e deposinto na conta destino
