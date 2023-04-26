@@ -14,7 +14,7 @@
 
 @if (transferenciaOk is not null )
 {
-    @if (transferenciaOk == true)
+    @if (transferenciaOk != false)
     {
         
             <h1>transferencia Realizada com sucesso!</h1>
@@ -28,7 +28,7 @@
         
     }
 
-    @if(transferenciaOk == false)
+    else
     {
         <h1>Erro! não foi possivel realizar está operação</h1>
     }
@@ -44,23 +44,23 @@
     public void Transferir()
     {
         Carteira destino = dados.ListaDados.FirstOrDefault(c => c.Dono == contaDestino);
-        if (destino is not null )
+        if (destino is not null)
         {
             if (ValorTransferencia <= Conta.Saldo)
             {
                 transferenciaOk = true;
                 Conta.Transferir(destino, ValorTransferencia);
-               
+
             }
-        }
-            if(ValorTransferencia > Conta.Saldo)
+
+            else
             {
                 transferenciaOk = false;
             }
-        else
-        {
-            transferenciaOk = false;
         }
+
+        
+    
     }       
 
 }
