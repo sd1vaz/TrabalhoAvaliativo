@@ -1,0 +1,55 @@
+﻿@inject DadosCarteiras sacar
+<p>sacar</p>
+@if (SaqueOk == null||SaqueOk == false)
+{
+<h5>valor para saque</h5>
+<input type="number" @bind=Valorsaque/>
+<br><br>
+<button @onclick=sacarOK > Confirmar saque</button>
+}
+@if (SaqueOk is not null )
+{
+    @if (SaqueOk != false)
+    {
+        
+            <h1>saque Realizado com sucesso!</h1>
+            <p>Resumo</p>
+            <br>
+            <p>Valor: @Valorsaque</p>
+            <br>
+            <p>Data: @DateTime.Now.ToLongDateString() </p>
+        
+    }
+
+    else
+    {
+        <h1>Erro! não foi possivel realizar está operação</h1>
+    }
+}
+
+<h3>saque</h3>
+
+@code {
+    [Parameter]
+    public Carteira Conta { get; set; }
+    bool? SaqueOk = null;
+    double Valorsaque;
+
+    public void sacarOK()
+    {
+            if (Valorsaque <= Conta.Saldo)
+            {
+                SaqueOk = true;
+                Conta.Sacar(Valorsaque);
+
+            }
+
+            else
+            {
+                SaqueOk = false;
+            }
+        }
+
+        
+    
+}
