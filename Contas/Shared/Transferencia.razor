@@ -12,23 +12,25 @@
 <button @onclick=Transferir > Confirma Transferencia</button>
 }
 
-@if(transferenciaOk is not null)
+@if (transferenciaOk is not null )
 {
     @if (transferenciaOk == true)
     {
-        <h1>Deposito Realizado com sucesso!</h1>
-        <p>Resumo</p>
-        <br>
-        <p>Destino: @contaDestino</p>
-         <br>
-        <p>Valor: @ValorTransferencia</p>
-          <br>
-        <p>Data: @DateTime.Now.ToLongDateString() </p>
-
+        
+            <h1>transferencia Realizada com sucesso!</h1>
+            <p>Resumo</p>
+            <br>
+            <p>Destino: @contaDestino</p>
+            <br>
+            <p>Valor: @ValorTransferencia</p>
+            <br>
+            <p>Data: @DateTime.Now.ToLongDateString() </p>
+        
     }
-    else
+
+    @if(transferenciaOk == false)
     {
-       <h1>Erro! não foi possivel realizar está operação</h1>  
+        <h1>Erro! não foi possivel realizar está operação</h1>
     }
 }
 
@@ -41,17 +43,24 @@
 
     public void Transferir()
     {
-        Carteira destino =  dados.ListaDados.FirstOrDefault(c => c.Dono == contaDestino);
-        if (destino is not null)
-    {
-            Conta.Transferir(destino, ValorTransferencia);
-            transferenciaOk = true;
-            
+        Carteira destino = dados.ListaDados.FirstOrDefault(c => c.Dono == contaDestino);
+        if (destino is not null )
+        {
+            if (ValorTransferencia <= Conta.Saldo)
+            {
+                transferenciaOk = true;
+                Conta.Transferir(destino, ValorTransferencia);
+               
+            }
         }
+            if(ValorTransferencia > Conta.Saldo)
+            {
+                transferenciaOk = false;
+            }
         else
         {
             transferenciaOk = false;
         }
-    }
+    }       
 
 }
