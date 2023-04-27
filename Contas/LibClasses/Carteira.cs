@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Contas.LibClasses
         public int ID { get; set; }
         public double CPF { get; set; }
         private static int _IDAtual = 0;
+        public double limite { get; set; }  
 
         public Carteira()
         {
@@ -26,13 +28,28 @@ namespace Contas.LibClasses
 
         public bool Sacar(double Valor)
         {
-            if (Valor > this.Saldo)
-                return false;
+          
+            if (Valor <= this.Saldo)
+            {
+                
+                this.Saldo -= Valor;
+                //this.Saldo = Saldo - Valor;
+                return true;
 
-            this.Saldo -= Valor;
-            //this.Saldo = Saldo - Valor;
-            return true;
+            }
+            else if (Valor <= this.Saldo + this.limite)
+            {
+                
+                double restante = this.Saldo + this.limite - Valor;
+                this.limite = restante;
+                this.Saldo = this.Saldo - Valor;
+                return true;
+            }
+            else { return false; }
+
+
         }
+        
 
         public bool Depositar(double Valor)
         {

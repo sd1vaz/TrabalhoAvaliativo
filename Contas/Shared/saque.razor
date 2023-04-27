@@ -43,7 +43,7 @@
     {
         DateTime hora= dados.DataDoSistema;
 
-        if (Valorsaque <= Conta.Saldo && dados.DataDoSistema.TimeOfDay >= HoraInicial && dados.DataDoSistema.TimeOfDay <= Horafinal)
+        if (Valorsaque <= Conta.Saldo + Conta.limite && dados.DataDoSistema.TimeOfDay >= HoraInicial && dados.DataDoSistema.TimeOfDay <= Horafinal)
             {
                 SaqueOk = true;
                 Conta.Sacar(Valorsaque);

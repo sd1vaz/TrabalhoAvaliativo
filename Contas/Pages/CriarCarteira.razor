@@ -30,6 +30,7 @@
         novaConta.Dono = nome;
         novaConta.CPF = CPF;
         novaConta.Depositar(valor);
+        novaConta.limite = valor *0.1;
         dados.ListaDados.Add(novaConta);
         mensagem = $"Carteira Criada com Sucesso ({nome} Saldo:{valor} ID:{novaConta.ID} CPF: {CPF})";
         nome = "";
