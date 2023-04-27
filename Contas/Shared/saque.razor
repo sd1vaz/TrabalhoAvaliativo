@@ -1,8 +1,8 @@
-﻿@inject DadosCarteiras sacar
-<p>sacar</p>
-@if (SaqueOk == null||SaqueOk == false)
+﻿@inject DadosCarteiras dados
+
+@if (SaqueOk is null||SaqueOk == false)
 {
-<h5>valor para saque</h5>
+<p>valor para saque</p>
 <input type="number" @bind=Valorsaque/>
 <br><br>
 <button @onclick=sacarOK > Confirmar saque</button>
@@ -27,7 +27,7 @@
     }
 }
 
-<h3>saque</h3>
+
 
 @code {
     [Parameter]
