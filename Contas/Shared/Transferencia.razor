@@ -1,7 +1,7 @@
 ﻿@inject DadosCarteiras dados
 
 <h3>Transferencia</h3>
-@if (transferenciaOk is null || transferenciaOk == false)
+@if (transferenciaOk is null )
 {
     <p>Conta Destino</p>
 <input type="text" @bind=contaDestino/>
@@ -9,14 +9,17 @@
 <p>Valor da Transferencia</p>
 <input type="number" @bind=ValorTransferencia/>
 <br><br>
-<button @onclick=Transferir > Confirma Transferencia</button>
+<button @onclick=CONFIRMARCPF> Confirma Transferencia</button>
 }
 
-@if (transferenciaOk is not null )
+@if (transferenciaOk is not null || CPFok is not null)
 {
-    @if (transferenciaOk != false)
+    @if (CPFok != false)
     {
-        
+    <button @onclick=Transferir>transferir</button>
+    
+        @if (ValorTransferencia < 1000)
+        {
             <h1>transferencia Realizada com sucesso!</h1>
             <p>Resumo</p>
             <br>
@@ -24,10 +27,17 @@
             <br>
             <p>Valor: @ValorTransferencia</p>
             <br>
-            <p>Data: @DateTime.Now.ToLongDateString() </p>
+            <p>Data: @DateTime.Now.ToLongDateString()</p>
+        }
+        else if(ValorTransferencia>=1000) 
+        {
+            <p>Confirme os 3 primeiros digitos de seu cpf :</p>
+            <input type = "number" @bind=CPFconfirmacao />
+            <button @onclick=Transferir>confirmar</button>
+        }
         
-    }
 
+    }
     else
     {
         <h1>Erro! não foi possivel realizar está operação</h1>
@@ -35,18 +45,40 @@
 }
 
 @code {
-    [Parameter]
-    public Carteira Conta { get; set; }
-    bool? transferenciaOk = null;
-    string contaDestino;
-    double ValorTransferencia;
+        [Parameter]
+        public Carteira Conta { get; set; }
+        bool? transferenciaOk = null;
+        string contaDestino;
+        double ValorTransferencia;
+        int CPFconfirmacao;
+        bool? CPFok = null;
+        int CPF;
 
+        public void CONFIRMARCPF()
+        {
+            string confirmaCPF = Convert.ToString(CPFconfirmacao);
+            string ContaCPF = Convert.ToString(Conta.CPF);
+            if(ValorTransferencia<1000)
+            {
+                CPFok = true;
+            }
+            
+                else if (ValorTransferencia>=1000 && confirmaCPF == ContaCPF.Substring(0, 2))
+                {
+                    CPFok = true;
+                }
+                else
+                {
+                    CPFok = false;
+                }
+            
+        }
     public void Transferir()
     {
         Carteira destino = dados.ListaDados.FirstOrDefault(c => c.Dono == contaDestino);
         if (destino is not null)
         {
-            if (ValorTransferencia <= Conta.Saldo)
+            if (ValorTransferencia <= Conta.Saldo && CPFok == true )
             {
                 transferenciaOk = true;
                 Conta.Transferir(destino, ValorTransferencia);
@@ -59,8 +91,7 @@
             }
         }
 
-        
-    
-    }       
-
+    }
 }
+
+

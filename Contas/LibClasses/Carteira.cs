@@ -15,6 +15,7 @@ namespace Contas.LibClasses
         }
         public string Dono { get; set; }
         public int ID { get; set; }
+        public double CPF { get; set; }
         private static int _IDAtual = 0;
 
         public Carteira()
