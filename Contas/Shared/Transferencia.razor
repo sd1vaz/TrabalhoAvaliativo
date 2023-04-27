@@ -1,41 +1,44 @@
 ﻿@inject DadosCarteiras dados
 
 <h3>Transferencia</h3>
-@if (transferenciaOk is null )
+@if (transferenciaOk is null)
 {
     <p>Conta Destino</p>
-<input type="text" @bind=contaDestino/>
-<br><br>
-<p>Valor da Transferencia</p>
-<input type="number" @bind=ValorTransferencia/>
-<br><br>
-<button @onclick=CONFIRMARCPF> Confirma Transferencia</button>
+    <input type="text" @bind=contaDestino />
+    <br>
+    <br>
+    <p>Valor da Transferencia</p>
+    <input type="number" @bind=ValorTransferencia />
+    <br>
+    <br>
+    @if (ValorTransferencia >= 1000)
+    {
+        <p>Confirme os 3 primeiros digitos de seu cpf :</p>
+        <input type="number" @bind=CPFconfirmacao />
+        <button @onclick=CONFIRMARCPF>confirmar</button>
+    }
+    <br>
+    <br>
+    <button @onclick=Transferir> Confirma Transferencia</button>
 }
 
-@if (transferenciaOk is not null || CPFok is not null)
+@if (transferenciaOk is not null)
 {
-    @if (CPFok != false)
+    @if (transferenciaOk == true)
     {
-    <button @onclick=Transferir>transferir</button>
-    
-        @if (ValorTransferencia < 1000)
-        {
-            <h1>transferencia Realizada com sucesso!</h1>
-            <p>Resumo</p>
-            <br>
-            <p>Destino: @contaDestino</p>
-            <br>
-            <p>Valor: @ValorTransferencia</p>
-            <br>
-            <p>Data: @DateTime.Now.ToLongDateString()</p>
-        }
-        else if(ValorTransferencia>=1000) 
-        {
-            <p>Confirme os 3 primeiros digitos de seu cpf :</p>
-            <input type = "number" @bind=CPFconfirmacao />
-            <button @onclick=Transferir>confirmar</button>
-        }
-        
+
+
+        <h1>transferencia Realizada com sucesso!</h1>
+        <p>Resumo</p>
+        <br>
+        <p>Destino: @contaDestino</p>
+        <br>
+        <p>Valor: @ValorTransferencia</p>
+        <br>
+        <p>Data: @DateTime.Now.ToLongDateString()</p>
+
+
+
 
     }
     else
@@ -45,40 +48,41 @@
 }
 
 @code {
-        [Parameter]
-        public Carteira Conta { get; set; }
-        bool? transferenciaOk = null;
-        string contaDestino;
-        double ValorTransferencia;
-        int CPFconfirmacao;
-        bool? CPFok = null;
-        int CPF;
+    [Parameter]
+    public Carteira Conta { get; set; }
+    bool? transferenciaOk = null;
+    string contaDestino;
+    double ValorTransferencia;
+    int CPFconfirmacao;
+    bool? CPFok = null;
+    int CPF;
 
-        public void CONFIRMARCPF()
+    public void CONFIRMARCPF()
+    {
+        string confirmaCPF = Convert.ToString(CPFconfirmacao);
+        string ContaCPF = Convert.ToString(Conta.CPF);
+        Console.WriteLine($"{confirmaCPF} >> {ContaCPF} >> {ValorTransferencia >= 1000 && confirmaCPF == ContaCPF.Substring(0, 3)}");
+        if (ValorTransferencia < 1000)
         {
-            string confirmaCPF = Convert.ToString(CPFconfirmacao);
-            string ContaCPF = Convert.ToString(Conta.CPF);
-            if(ValorTransferencia<1000)
-            {
-                CPFok = true;
-            }
-            
-                else if (ValorTransferencia>=1000 && confirmaCPF == ContaCPF.Substring(0, 2))
-                {
-                    CPFok = true;
-                }
-                else
-                {
-                    CPFok = false;
-                }
-            
+            CPFok = true;
         }
+
+        else if (ValorTransferencia >= 1000 && confirmaCPF == ContaCPF.Substring(0, 3))
+        {
+            CPFok = true;
+        }
+        else
+        {
+            CPFok = false;
+        }
+
+    }
     public void Transferir()
     {
         Carteira destino = dados.ListaDados.FirstOrDefault(c => c.Dono == contaDestino);
         if (destino is not null)
         {
-            if (ValorTransferencia <= Conta.Saldo && CPFok == true )
+            if (ValorTransferencia <= Conta.Saldo && CPFok == true)
             {
                 transferenciaOk = true;
                 Conta.Transferir(destino, ValorTransferencia);
