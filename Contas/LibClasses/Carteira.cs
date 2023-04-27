@@ -75,5 +75,11 @@ namespace Contas.LibClasses
                 return false;
             }
         }
+        public bool CobrarTarifa()
+        {
+            double Tarifa = 19.90;
+            this.Saldo -= Tarifa;
+            return true;
+        }
     }
 }

@@ -11,7 +11,13 @@
 
 
 <br>
-<button>Cobrar Tarifas (Todas as Contas) </button>
+<button @onclick="cobrar">Cobrar Tarifas (Todas as Contas) </button>
 @code{
-  
+    public void cobrar()
+    {
+        foreach (var carteira in dados.ListaDados)
+        {
+            carteira.CobrarTarifa();
+        }
+    }
 }
