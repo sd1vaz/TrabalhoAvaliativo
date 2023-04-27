@@ -34,10 +34,13 @@
     public Carteira Conta { get; set; }
     bool? SaqueOk = null;
     double Valorsaque;
+    DateTime hora = DateTime.Now;
+    TimeSpan HoraInicial = new TimeSpan(8, 0, 0);
+    TimeSpan Horafinal = new TimeSpan(13, 0, 0);
 
     public void sacarOK()
     {
-            if (Valorsaque <= Conta.Saldo)
+        if (Valorsaque <= Conta.Saldo && hora.TimeOfDay >= HoraInicial && hora.TimeOfDay <= Horafinal)
             {
                 SaqueOk = true;
                 Conta.Sacar(Valorsaque);

@@ -1,12 +1,13 @@
-﻿<h3>Dados para Deposito</h3>
+﻿@inject DadosCarteiras dados
+<h3>Dados para Deposito</h3>
 <br><br>
 <p>Valor Para Deposito:</p>
 <input type="number" @bind="valor"/>
 <button @onclick="Depositar">Confirmar Deposito </button>
 
-@if(depositoOk is not null)
+@if (depositoOk is not null)
 {
-    @if (depositoOk == true)
+    @if (depositoOk == true )
     {
         <h1>Deposito Realizado com sucesso!</h1>
     }
@@ -19,13 +20,26 @@
 @code {
     [Parameter]
     public Carteira? Conta { get; set; }
-    
+
+    DateTime hora = DateTime.Now;
+    TimeSpan HoraInicial = new TimeSpan (8, 0, 0);
+    TimeSpan Horafinal = new TimeSpan(18, 0, 0);
     private bool? depositoOk = null;
     private double valor;
 
-    private void Depositar()
+    public void Depositar()
     {
-        depositoOk = Conta.Depositar(valor);
+        if (hora.TimeOfDay >= HoraInicial && hora.TimeOfDay <= Horafinal)
+        {
+            depositoOk = Conta.Depositar(valor);
+        }
+        else
+        {
+            depositoOk = false;  
+        }
+
+
+
     }
 
 }

@@ -59,6 +59,7 @@
             Console.WriteLine("Digite 2 para verificar saldo");
             Console.WriteLine("Digite 3 para sacar");
             Console.WriteLine("Digite 4 para deposito");
+            Console.WriteLine(Convert.ToDouble(DateTime.Now));
             string entrada = Console.ReadLine();
 
             switch(entrada)
