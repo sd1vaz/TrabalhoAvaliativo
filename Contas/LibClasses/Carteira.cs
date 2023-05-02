@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Contas.Pages;
+using Contas.Shared;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
@@ -79,13 +81,19 @@ namespace Contas.LibClasses
         {
             double Tarifa = 19.90;
             this.Saldo -= Tarifa;
+            int MesAtual = DateTime.Now.Month;
+            if (MesAtual == MesCobrado)
+                return false;
+            else
+
+                return true;
+
+
             return true;
         }
-        public bool MesCobranca()
-        {
-           int MesAtual= DateTime.Now.Month;
-           int MesCobrado= 
-            if(MesAtual==)
-        }
+        
+           
+            
+        
     }
 }
