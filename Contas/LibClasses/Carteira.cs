@@ -45,7 +45,7 @@ namespace Contas.LibClasses
             {
                 
                 double restante = this.Saldo + this.limite - Valor;
-                this.limite = restante;
+            
                 this.Saldo = this.Saldo - Valor;
                 return true;
             }
@@ -58,7 +58,7 @@ namespace Contas.LibClasses
         public bool Depositar(double Valor )
         {
            
-            this.Saldo += Valor - limite;
+            this.Saldo += Valor ;
            
             return true;
         }
