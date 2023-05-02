@@ -22,7 +22,7 @@ namespace Contas.LibClasses
         public double limite { get; set; }  
         
         public int MesCobrado { get; set; } 
-        public int DataDoSistema { get; set; }
+       
 
         public Carteira()
         {
@@ -84,12 +84,14 @@ namespace Contas.LibClasses
 
             if (DataDoSistema == this.MesCobrado)
             {
+
                 return false;
             }
             else
             {
                 double Tarifa = 19.90;
                 this.Saldo -= Tarifa;
+                this.MesCobrado = DataDoSistema;
                 return true;
             }
 
