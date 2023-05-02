@@ -12,16 +12,17 @@
 <br>
 <button @onclick="cobrar">Cobrar Tarifas (Todas as Contas) </button>
 @code{
-    int MesClique = DateTime.Now.Month;
+   
 
     public void cobrar()
-
     {
-        int MesCobrado = MesClique;
+        int MesCobrado = DateTime.Now.Month;
+        
+        
         foreach (var carteira in dados.ListaDados)
         {
             
-            carteira.CobrarTarifa();
+            carteira.CobrarTarifa(dados.DataDoSistema.Month);
 
         }
         

@@ -6,7 +6,6 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Contas.LibClasses
 {
     public class Carteira
@@ -21,6 +20,9 @@ namespace Contas.LibClasses
         public double CPF { get; set; }
         private static int _IDAtual = 0;
         public double limite { get; set; }  
+        
+        public int MesCobrado { get; set; } 
+        public int DataDoSistema { get; set; }
 
         public Carteira()
         {
@@ -77,19 +79,22 @@ namespace Contas.LibClasses
                 return false;
             }
         }
-        public bool CobrarTarifa()
+        public bool CobrarTarifa(int DataDoSistema)
         {
-            double Tarifa = 19.90;
-            this.Saldo -= Tarifa;
-            int MesAtual = DateTime.Now.Month;
-            if (MesAtual == MesCobrado)
+
+            if (DataDoSistema == this.MesCobrado)
+            {
                 return false;
+            }
             else
-
+            {
+                double Tarifa = 19.90;
+                this.Saldo -= Tarifa;
                 return true;
+            }
 
 
-            return true;
+
         }
         
            
