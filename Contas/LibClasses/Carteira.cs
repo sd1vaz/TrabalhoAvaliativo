@@ -81,5 +81,11 @@ namespace Contas.LibClasses
             this.Saldo -= Tarifa;
             return true;
         }
+        public bool MesCobranca()
+        {
+           int MesAtual= DateTime.Now.Month;
+           int MesCobrado= 
+            if(MesAtual==)
+        }
     }
 }
