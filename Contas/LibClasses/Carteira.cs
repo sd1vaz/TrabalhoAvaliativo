@@ -55,9 +55,11 @@ namespace Contas.LibClasses
         }
         
 
-        public bool Depositar(double Valor)
+        public bool Depositar(double Valor )
         {
-            this.Saldo += Valor;
+           
+            this.Saldo += Valor - limite;
+           
             return true;
         }
 
